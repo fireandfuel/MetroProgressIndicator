@@ -10,18 +10,18 @@ Copy this file to your source folder.</li>
 Copy the LICENSE file to your root folder.</li>
 Add following lines as CSS property to your application:</li>
 
-.progress-indicator {
-	-fx-skin: "cuina.metro.skin.MetroProgressIndicatorSkin";
-	-fx-indeterminate-segment-count: 5;
-}
+	.progress-indicator {
+		-fx-skin: "cuina.metro.skin.MetroProgressIndicatorSkin";
+		-fx-indeterminate-segment-count: 5;
+	}
 
 You can customize the angle per step, maximum step time, time until the next
 segment appears and time between two spins.<br>
 Simply add to the <i>.progress-indicator</i> CSS property:
 
-	-fx-indeterminate-angle-per-step: 40;
-	-fx-indeterminate-max-step-time: 300.0;
-	-fx-indeterminate-next-segment-time: 200.0;
-	-fx-indeterminate-next-spin-time: 500.0;
+		-fx-indeterminate-angle-per-step: 40;
+		-fx-indeterminate-max-step-time: 300.0;
+		-fx-indeterminate-next-segment-time: 200.0;
+		-fx-indeterminate-next-spin-time: 500.0;
  
 License: LGPL v3.0
