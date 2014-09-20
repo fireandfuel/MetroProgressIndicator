@@ -7,7 +7,7 @@
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
  * version 3.0 of the License, or (at your option) any later version.
- * See the file COPYING included with this distribution for more
+ * See the file LICENSE included with this distribution for more
  * information.
  */
 
@@ -60,7 +60,7 @@ import com.sun.javafx.scene.control.skin.ProgressIndicatorSkin;
  * <ul>
  * <li>Check whether you use Java 8 as target platform.</li>
  * <li>Copy this file to your source folder.</li>
- * <li>Copy the COPYING.LESSER file to your root folder.</li>
+ * <li>Copy the LICENSE file to your root folder.</li>
  * <li>Add following lines as CSS property to your application:</li>
  * </ul>
  *

@@ -7,7 +7,7 @@
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
  * version 3.0 of the License, or (at your option) any later version.
- * See the file COPYING included with this distribution for more
+ * See the file LICENSE included with this distribution for more
  * information.
  */
 
