@@ -1,0 +1,26 @@
+/*
+ * JavaFX 8 Indetermine skin for ProgressIndicator control,
+ * inspired by Windows 8's ProgressRing.
+ * Copyright (c) 2014, fireandfuel (fireandfuel<at>hotmail<dot>de)
+ *
+ * This library is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public
+ * License as published by the Free Software Foundation; either
+ * version 3.0 of the License, or (at your option) any later version.
+ * See the file COPYING included with this distribution for more
+ * information.
+ */
+
+/*******************************************************************************
+ *                                                                             *
+ * ProgressIndicator                                                           *
+ *                                                                             *
+ ******************************************************************************/
+.progress-indicator {
+	-fx-skin: "cuina.metro.skin.MetroProgressIndicatorSkin";
+	-fx-indeterminate-segment-count: 5;
+}
+
+.progress-indicator:indeterminate .segment6 {
+    -fx-shape:"M3.01 37.25 a3.5,3.5 0 1,1 0,1 Z";
+}
