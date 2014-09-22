@@ -104,11 +104,11 @@ public class MetroProgressIndicatorSkin extends ProgressIndicatorSkin // extends
 
 		private final double opacityPerAngle(double x)
 		{
-			if(x > 45.0d && x <= 685.0d)
+			if(x > 20.0d && x <= 700.0d)
 			{
 				return 1.0d;
 			}
-			return (Math.abs(Math.sin((x * Math.PI) / 90.0d)));
+			return (Math.abs(Math.sin((x * Math.PI) / 30.0d)));
 		}
 
 		private IndicatorPaths pathsG;
@@ -139,6 +139,11 @@ public class MetroProgressIndicatorSkin extends ProgressIndicatorSkin // extends
 		{
 			this.fillOverride = fillOverride;
 			this.rebuild();
+			this.rebuildTimeline();
+			if(MetroProgressIndicatorSkin.this.indeterminateTransition != null)
+			{
+				MetroProgressIndicatorSkin.this.indeterminateTransition.playFromStart();
+			}
 		}
 
 		public void setSpinEnabled(boolean spinEnabled)
@@ -395,6 +400,11 @@ public class MetroProgressIndicatorSkin extends ProgressIndicatorSkin // extends
 			if(MetroProgressIndicatorSkin.this.spinner != null)
 			{
 				MetroProgressIndicatorSkin.this.spinner.rebuild();
+				MetroProgressIndicatorSkin.this.spinner.rebuildTimeline();
+				if(MetroProgressIndicatorSkin.this.indeterminateTransition != null)
+				{
+					MetroProgressIndicatorSkin.this.indeterminateTransition.playFromStart();
+				}
 			}
 		}
 
@@ -450,7 +460,7 @@ public class MetroProgressIndicatorSkin extends ProgressIndicatorSkin // extends
 		}
 	};
 
-	private final IntegerProperty anglePerStep = new StyleableIntegerProperty(40)
+	private final IntegerProperty anglePerStep = new StyleableIntegerProperty(10)
 	{
 		@Override
 		protected void invalidated()
@@ -458,6 +468,11 @@ public class MetroProgressIndicatorSkin extends ProgressIndicatorSkin // extends
 			if(MetroProgressIndicatorSkin.this.spinner != null)
 			{
 				MetroProgressIndicatorSkin.this.spinner.rebuild();
+				MetroProgressIndicatorSkin.this.spinner.rebuildTimeline();
+				if(MetroProgressIndicatorSkin.this.indeterminateTransition != null)
+				{
+					MetroProgressIndicatorSkin.this.indeterminateTransition.playFromStart();
+				}
 			}
 		}
 
@@ -480,7 +495,7 @@ public class MetroProgressIndicatorSkin extends ProgressIndicatorSkin // extends
 		}
 	};
 
-	private final DoubleProperty maxStepTime = new StyleableDoubleProperty(300.0d)
+	private final DoubleProperty maxStepTime = new StyleableDoubleProperty(75.0d)
 	{
 		@Override
 		protected void invalidated()
@@ -488,6 +503,11 @@ public class MetroProgressIndicatorSkin extends ProgressIndicatorSkin // extends
 			if(MetroProgressIndicatorSkin.this.spinner != null)
 			{
 				MetroProgressIndicatorSkin.this.spinner.rebuild();
+				MetroProgressIndicatorSkin.this.spinner.rebuildTimeline();
+				if(MetroProgressIndicatorSkin.this.indeterminateTransition != null)
+				{
+					MetroProgressIndicatorSkin.this.indeterminateTransition.playFromStart();
+				}
 			}
 		}
 
@@ -518,6 +538,11 @@ public class MetroProgressIndicatorSkin extends ProgressIndicatorSkin // extends
 			if(MetroProgressIndicatorSkin.this.spinner != null)
 			{
 				MetroProgressIndicatorSkin.this.spinner.rebuild();
+				MetroProgressIndicatorSkin.this.spinner.rebuildTimeline();
+				if(MetroProgressIndicatorSkin.this.indeterminateTransition != null)
+				{
+					MetroProgressIndicatorSkin.this.indeterminateTransition.playFromStart();
+				}
 			}
 		}
 
@@ -548,6 +573,11 @@ public class MetroProgressIndicatorSkin extends ProgressIndicatorSkin // extends
 			if(MetroProgressIndicatorSkin.this.spinner != null)
 			{
 				MetroProgressIndicatorSkin.this.spinner.rebuild();
+				MetroProgressIndicatorSkin.this.spinner.rebuildTimeline();
+				if(MetroProgressIndicatorSkin.this.indeterminateTransition != null)
+				{
+					MetroProgressIndicatorSkin.this.indeterminateTransition.playFromStart();
+				}
 			}
 		}
 
