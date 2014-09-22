@@ -76,7 +76,7 @@ import com.sun.javafx.scene.control.skin.ProgressIndicatorSkin;
  * It uses a sinus function to calculate the time interval per step.<br>
  * <br>
  * You can customize the angle per step, maximum step time, time until the next
- * segment appears and time between two spins.<br>
+ * segment appears, time between two spins and spinner color<br>
  * Simply add to the <i>.progress-indicator</i> CSS property:
  *
  * <pre>
@@ -85,6 +85,7 @@ import com.sun.javafx.scene.control.skin.ProgressIndicatorSkin;
  * 	-fx-indeterminate-max-step-time: 300.0;
  * 	-fx-indeterminate-next-segment-time: 200.0;
  * 	-fx-indeterminate-next-spin-time: 500.0;
+ * 	-fx-progress-color: BLACK;
  * </i>
  * </pre>
  */
