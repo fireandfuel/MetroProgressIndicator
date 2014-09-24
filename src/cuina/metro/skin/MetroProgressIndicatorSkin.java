@@ -99,8 +99,13 @@ public class MetroProgressIndicatorSkin extends ProgressIndicatorSkin // extends
 	{
 		private final double timePerAngle(double x)
 		{
-			return (Math.abs(Math.sin((x * Math.PI) / 360.0d)
-					* MetroProgressIndicatorSkin.this.maxStepTime.get()));
+			// t = |sin(x*PI / 360)| * time
+			// return (Math.abs(Math.sin((x * Math.PI) / 360.0d)
+			// * MetroProgressIndicatorSkin.this.maxStepTime.get()));
+
+			// t = ((-cos(x*PI / 180) + 1) / 2) * time
+			return (-Math.cos((x * Math.PI) / 180.0d) + 1) / 2
+					* MetroProgressIndicatorSkin.this.maxStepTime.get();
 		};
 
 		private final double opacityPerAngle(double x)
@@ -496,7 +501,7 @@ public class MetroProgressIndicatorSkin extends ProgressIndicatorSkin // extends
 		}
 	};
 
-	private final DoubleProperty maxStepTime = new StyleableDoubleProperty(75.0d)
+	private final DoubleProperty maxStepTime = new StyleableDoubleProperty(100.0d)
 	{
 		@Override
 		protected void invalidated()
