@@ -16,6 +16,8 @@ hs_err_pid*
 .project
 .metadata
 bin/**
+build/
+deploy/
 tmp/**
 tmp/**/*
 *.tmp
@@ -32,3 +34,7 @@ local.properties
 
 # Locally stored "Eclipse launch configurations"
 *.launch
+
+# Intellij IDEA
+.idea/
+*.iml
