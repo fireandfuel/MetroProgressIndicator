@@ -17,7 +17,7 @@
  *                                                                             *
  ******************************************************************************/
 .progress-indicator {
-	-fx-skin: "cuina.metro.skin.MetroProgressIndicatorSkin";
+	-fx-skin: "niobe.metro.skin.MetroProgressIndicatorSkin";
 	-fx-indeterminate-segment-count: 5;
 }
 

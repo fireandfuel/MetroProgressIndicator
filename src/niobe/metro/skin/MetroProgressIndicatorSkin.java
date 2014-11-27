@@ -11,7 +11,7 @@
  * information.
  */
 
-package cuina.metro.skin;
+package niobe.metro.skin;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -466,7 +466,7 @@ public class MetroProgressIndicatorSkin extends ProgressIndicatorSkin // extends
 		}
 	};
 
-	private final IntegerProperty anglePerStep = new StyleableIntegerProperty(10)
+	private final IntegerProperty anglePerStep = new StyleableIntegerProperty(40)
 	{
 		@Override
 		protected void invalidated()
@@ -501,7 +501,7 @@ public class MetroProgressIndicatorSkin extends ProgressIndicatorSkin // extends
 		}
 	};
 
-	private final DoubleProperty maxStepTime = new StyleableDoubleProperty(100.0d)
+	private final DoubleProperty maxStepTime = new StyleableDoubleProperty(300.0d)
 	{
 		@Override
 		protected void invalidated()

@@ -11,7 +11,7 @@
  * information.
  */
 
-package cuina.metro.test;
+package niobe.metro.test;
 
 import javafx.application.Application;
 import javafx.geometry.Pos;
@@ -42,7 +42,7 @@ public class ProgressIndicatorTest extends Application
 
 		Scene scene = new Scene(pane, 200, 200);
 		scene.getStylesheets().add(
-				this.getClass().getResource("/cuina/metro/css/theme.css").toExternalForm());
+				this.getClass().getResource("/niobe/metro/css/theme.css").toExternalForm());
 		stage.setScene(scene);
 
 		stage.show();
