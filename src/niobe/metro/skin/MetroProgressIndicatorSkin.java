@@ -13,10 +13,10 @@
 
 package niobe.metro.skin;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-
+import com.sun.javafx.css.converters.BooleanConverter;
+import com.sun.javafx.css.converters.PaintConverter;
+import com.sun.javafx.css.converters.SizeConverter;
+import com.sun.javafx.scene.control.skin.ProgressIndicatorSkin;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
@@ -46,10 +46,9 @@ import javafx.scene.paint.Paint;
 import javafx.scene.transform.Scale;
 import javafx.util.Duration;
 
-import com.sun.javafx.css.converters.BooleanConverter;
-import com.sun.javafx.css.converters.PaintConverter;
-import com.sun.javafx.css.converters.SizeConverter;
-import com.sun.javafx.scene.control.skin.ProgressIndicatorSkin;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * Indetermine skin for ProgressIndicator control, inspired by Windows 8's
@@ -63,7 +62,6 @@ import com.sun.javafx.scene.control.skin.ProgressIndicatorSkin;
  * <li>Copy the LICENSE file to your root folder.</li>
  * <li>Add following lines as CSS property to your application:</li>
  * </ul>
- *
  * <pre>
  * <i>
  * .progress-indicator {
@@ -72,26 +70,24 @@ import com.sun.javafx.scene.control.skin.ProgressIndicatorSkin;
  * }
  * </i>
  * </pre>
- *
  * It uses a sinus function to calculate the time interval per step.<br>
  * <br>
  * You can customize the angle per step, maximum step time, time until the next
  * segment appears, time between two spins and spinner color<br>
  * Simply add to the <i>.progress-indicator</i> CSS property:
- *
  * <pre>
  * <i>
- * 	-fx-indeterminate-angle-per-step: 40;
- * 	-fx-indeterminate-max-step-time: 300.0;
+ * 	-fx-indeterminate-angle-per-step: 30;
+ * 	-fx-indeterminate-max-step-time: 200.0;
  * 	-fx-indeterminate-next-segment-time: 200.0;
- * 	-fx-indeterminate-next-spin-time: 500.0;
+ * 	-fx-indeterminate-next-spin-time: 400.0;
  * 	-fx-progress-color: BLACK;
  * </i>
  * </pre>
  */
 public class MetroProgressIndicatorSkin extends ProgressIndicatorSkin // extends
-// BehaviorSkinBase<ProgressIndicator,
-// BehaviorBase<ProgressIndicator>>
+		// BehaviorSkinBase<ProgressIndicator,
+		// BehaviorBase<ProgressIndicator>>
 {
 	private ProgressIndicator control;
 
@@ -100,33 +96,33 @@ public class MetroProgressIndicatorSkin extends ProgressIndicatorSkin // extends
 		private final double timePerAngle(double x)
 		{
 			// t = |sin(x*PI / 360)| * time
-			// return (Math.abs(Math.sin((x * Math.PI) / 360.0d)
-			// * MetroProgressIndicatorSkin.this.maxStepTime.get()));
+			//			return (Math.abs(Math.sin((x * Math.PI) / 360.0d)
+			//									 * MetroProgressIndicatorSkin.this.maxStepTime.get()));
 
 			// t = ((-cos(x*PI / 180) + 1) / 2) * time
 			return (-Math.cos((x * Math.PI) / 180.0d) + 1) / 2
 					* MetroProgressIndicatorSkin.this.maxStepTime.get();
-		};
+		}
 
 		private final double opacityPerAngle(double x)
 		{
-			if(x > 20.0d && x <= 700.0d)
+			if (x > 10.0d && x <= 710.0d)
 			{
 				return 1.0d;
 			}
-			return (Math.abs(Math.sin((x * Math.PI) / 30.0d)));
+			return (Math.abs(Math.sin((x * Math.PI) / 80.0d)));
 		}
 
 		private IndicatorPaths pathsG;
-		private boolean spinEnabled = false;
-		private Paint fillOverride = null;
+		private boolean spinEnabled  = false;
+		private Paint   fillOverride = null;
 
 		private MetroIndetermineSpinner(boolean spinEnabled, Paint fillOverride)
 		{
 			// does not need to be a weak listener since it only listens to its
 			// own property
-			this.impl_treeVisibleProperty().addListener(
-					MetroProgressIndicatorSkin.this.treeVisibleListener);
+			// this.impl_treeVisibleProperty().addListener(
+			//		MetroProgressIndicatorSkin.this.parentTreeVisibleChangedListener);
 			this.spinEnabled = spinEnabled;
 			this.fillOverride = fillOverride;
 
@@ -146,7 +142,7 @@ public class MetroProgressIndicatorSkin extends ProgressIndicatorSkin // extends
 			this.fillOverride = fillOverride;
 			this.rebuild();
 			this.rebuildTimeline();
-			if(MetroProgressIndicatorSkin.this.indeterminateTransition != null)
+			if (MetroProgressIndicatorSkin.this.indeterminateTransition != null)
 			{
 				MetroProgressIndicatorSkin.this.indeterminateTransition.playFromStart();
 			}
@@ -160,53 +156,60 @@ public class MetroProgressIndicatorSkin extends ProgressIndicatorSkin // extends
 
 		private void rebuildTimeline()
 		{
-			if(this.spinEnabled)
+			if (this.spinEnabled)
 			{
-				if(MetroProgressIndicatorSkin.this.indeterminateTransition == null)
+				if (MetroProgressIndicatorSkin.this.indeterminateTransition == null)
 				{
 					MetroProgressIndicatorSkin.this.indeterminateTransition = new Timeline();
 					MetroProgressIndicatorSkin.this.indeterminateTransition
 							.setCycleCount(Animation.INDEFINITE);
 					MetroProgressIndicatorSkin.this.indeterminateTransition
 							.setDelay(MetroProgressIndicatorSkin.this.UNCLIPPED_DELAY);
-				} else
+				}
+				else
 				{
 					MetroProgressIndicatorSkin.this.indeterminateTransition.stop();
 					((Timeline) MetroProgressIndicatorSkin.this.indeterminateTransition)
 							.getKeyFrames().clear();
 				}
 				final ObservableList<KeyFrame> keyFrames = FXCollections
-						.<KeyFrame> observableArrayList();
+						.<KeyFrame>observableArrayList();
 
-				for(int c = 0; c < MetroProgressIndicatorSkin.this.indeterminateSegmentCount.get(); c++)
+				for (int c = 0; c < MetroProgressIndicatorSkin.this.indeterminateSegmentCount.get(); c++)
 				{
 					keyFrames.add(new KeyFrame(Duration.millis(1), new KeyValue(this.pathsG
-							.getChildren().get(c).rotateProperty(), 0), new KeyValue(this.pathsG
-							.getChildren().get(c).opacityProperty(), 0)));
+																						.getChildren().get(c)
+																						.rotateProperty(), 0),
+											   new KeyValue(this.pathsG
+																	.getChildren().get(c).opacityProperty(), 0)));
 
 					double time = MetroProgressIndicatorSkin.this.nextSegmentTime.get() * c;
-					for(int i = 0; i <= 720; i += MetroProgressIndicatorSkin.this.anglePerStep
+					for (int i = 0; i <= 720; i += MetroProgressIndicatorSkin.this.anglePerStep
 							.get())
 					{
 						time += this.timePerAngle(i);
 
 						keyFrames.add(new KeyFrame(Duration.millis(time), new KeyValue(this.pathsG
-								.getChildren().get(c).rotateProperty(), i), new KeyValue(
-								this.pathsG.getChildren().get(c).opacityProperty(), this
-										.opacityPerAngle(i))));
+																							   .getChildren().get(c)
+																							   .rotateProperty(), i),
+												   new KeyValue(
+														   this.pathsG.getChildren().get(c).opacityProperty(), this
+														   .opacityPerAngle(i))));
 					}
 					keyFrames.add(new KeyFrame(Duration.millis(time
-							+ MetroProgressIndicatorSkin.this.nextSpinTime.get()), new KeyValue(
+																	   + MetroProgressIndicatorSkin.this.nextSpinTime
+							.get()), new KeyValue(
 							this.pathsG.getChildren().get(c).rotateProperty(), 0), new KeyValue(
 							this.pathsG.getChildren().get(c).opacityProperty(), 0)));
 				}
 
 				((Timeline) MetroProgressIndicatorSkin.this.indeterminateTransition).getKeyFrames()
-						.setAll(keyFrames);
+																					.setAll(keyFrames);
 				MetroProgressIndicatorSkin.this.indeterminateTransition.playFromStart();
-			} else
+			}
+			else
 			{
-				if(MetroProgressIndicatorSkin.this.indeterminateTransition != null)
+				if (MetroProgressIndicatorSkin.this.indeterminateTransition != null)
 				{
 					MetroProgressIndicatorSkin.this.indeterminateTransition.stop();
 					((Timeline) MetroProgressIndicatorSkin.this.indeterminateTransition)
@@ -222,15 +225,16 @@ public class MetroProgressIndicatorSkin extends ProgressIndicatorSkin // extends
 			protected double computePrefWidth(double height)
 			{
 				double w = 0;
-				for(Node child : this.getChildren())
+				for (Node child : this.getChildren())
 				{
-					if(child instanceof Region)
+					if (child instanceof Region)
 					{
 						Region region = (Region) child;
-						if(region.getShape() != null)
+						if (region.getShape() != null)
 						{
 							w = Math.max(w, region.getShape().getLayoutBounds().getMaxX());
-						} else
+						}
+						else
 						{
 							w = Math.max(w, region.prefWidth(height));
 						}
@@ -243,15 +247,16 @@ public class MetroProgressIndicatorSkin extends ProgressIndicatorSkin // extends
 			protected double computePrefHeight(double width)
 			{
 				double h = 0;
-				for(Node child : this.getChildren())
+				for (Node child : this.getChildren())
 				{
-					if(child instanceof Region)
+					if (child instanceof Region)
 					{
 						Region region = (Region) child;
-						if(region.getShape() != null)
+						if (region.getShape() != null)
 						{
 							h = Math.max(h, region.getShape().getLayoutBounds().getMaxY());
-						} else
+						}
+						else
 						{
 							h = Math.max(h, region.prefHeight(width));
 						}
@@ -265,17 +270,18 @@ public class MetroProgressIndicatorSkin extends ProgressIndicatorSkin // extends
 			{
 				// calculate scale
 				double scale = this.getWidth() / this.computePrefWidth(-1);
-				for(Node child : this.getChildren())
+				for (Node child : this.getChildren())
 				{
-					if(child instanceof Region)
+					if (child instanceof Region)
 					{
 						Region region = (Region) child;
-						if(region.getShape() != null)
+						if (region.getShape() != null)
 						{
 							region.resize(region.getShape().getLayoutBounds().getMaxX(), region
 									.getShape().getLayoutBounds().getMaxY());
 							region.getTransforms().setAll(new Scale(scale, scale, 0, 0));
-						} else
+						}
+						else
 						{
 							region.autosize();
 						}
@@ -297,14 +303,14 @@ public class MetroProgressIndicatorSkin extends ProgressIndicatorSkin // extends
 			final double prefH = this.pathsG.prefHeight(-1);
 			double scaleX = w / prefW;
 			double scale = scaleX;
-			if((scaleX * prefH) > h)
+			if ((scaleX * prefH) > h)
 			{
 				scale = h / prefH;
 			}
 			double indicatorW = prefW * scale;
 			double indicatorH = prefH * scale;
 			this.pathsG.resizeRelocate((w - indicatorW) / 2, (h - indicatorH) / 2, indicatorW,
-					indicatorH);
+									   indicatorH);
 		}
 
 		private void rebuild()
@@ -312,19 +318,20 @@ public class MetroProgressIndicatorSkin extends ProgressIndicatorSkin // extends
 			// update indeterminate indicator
 			final int segments = MetroProgressIndicatorSkin.this.indeterminateSegmentCount.get();
 			this.pathsG.getChildren().clear();
-			for(int i = 0; i < segments; i++)
+			for (int i = 0; i < segments; i++)
 			{
 				Region region = new Region();
 				region.setScaleShape(false);
 				region.setCenterShape(false);
 				region.getStyleClass().addAll("segment", "segment6");
-				if(this.fillOverride instanceof Color)
+				if (this.fillOverride instanceof Color)
 				{
 					Color c = (Color) this.fillOverride;
 					region.setStyle("-fx-background-color: rgba(" + ((int) (255 * c.getRed()))
-							+ "," + ((int) (255 * c.getGreen())) + ","
-							+ ((int) (255 * c.getBlue())) + "," + c.getOpacity() + ");");
-				} else
+											+ ", " + ((int) (255 * c.getGreen())) + ", "
+											+ ((int) (255 * c.getBlue())) + ", " + c.getOpacity() + ");");
+				}
+				else
 				{
 					region.setStyle(null);
 				}
@@ -356,16 +363,16 @@ public class MetroProgressIndicatorSkin extends ProgressIndicatorSkin // extends
 		protected void invalidated()
 		{
 			final Paint value = this.get();
-			if(value != null && !(value instanceof Color))
+			if (value != null && !(value instanceof Color))
 			{
-				if(this.isBound())
+				if (this.isBound())
 				{
 					this.unbind();
 				}
 				this.set(null);
 				throw new IllegalArgumentException("Only Color objects are supported");
 			}
-			if(MetroProgressIndicatorSkin.this.spinner != null)
+			if (MetroProgressIndicatorSkin.this.spinner != null)
 			{
 				MetroProgressIndicatorSkin.this.spinner.setFillOverride(value);
 			}
@@ -403,11 +410,11 @@ public class MetroProgressIndicatorSkin extends ProgressIndicatorSkin // extends
 		@Override
 		protected void invalidated()
 		{
-			if(MetroProgressIndicatorSkin.this.spinner != null)
+			if (MetroProgressIndicatorSkin.this.spinner != null)
 			{
 				MetroProgressIndicatorSkin.this.spinner.rebuild();
 				MetroProgressIndicatorSkin.this.spinner.rebuildTimeline();
-				if(MetroProgressIndicatorSkin.this.indeterminateTransition != null)
+				if (MetroProgressIndicatorSkin.this.indeterminateTransition != null)
 				{
 					MetroProgressIndicatorSkin.this.indeterminateTransition.playFromStart();
 				}
@@ -441,7 +448,7 @@ public class MetroProgressIndicatorSkin extends ProgressIndicatorSkin // extends
 		@Override
 		protected void invalidated()
 		{
-			if(MetroProgressIndicatorSkin.this.spinner != null)
+			if (MetroProgressIndicatorSkin.this.spinner != null)
 			{
 				MetroProgressIndicatorSkin.this.spinner.setSpinEnabled(this.get());
 			}
@@ -466,16 +473,16 @@ public class MetroProgressIndicatorSkin extends ProgressIndicatorSkin // extends
 		}
 	};
 
-	private final IntegerProperty anglePerStep = new StyleableIntegerProperty(40)
+	private final IntegerProperty anglePerStep = new StyleableIntegerProperty(20)
 	{
 		@Override
 		protected void invalidated()
 		{
-			if(MetroProgressIndicatorSkin.this.spinner != null)
+			if (MetroProgressIndicatorSkin.this.spinner != null)
 			{
 				MetroProgressIndicatorSkin.this.spinner.rebuild();
 				MetroProgressIndicatorSkin.this.spinner.rebuildTimeline();
-				if(MetroProgressIndicatorSkin.this.indeterminateTransition != null)
+				if (MetroProgressIndicatorSkin.this.indeterminateTransition != null)
 				{
 					MetroProgressIndicatorSkin.this.indeterminateTransition.playFromStart();
 				}
@@ -501,16 +508,16 @@ public class MetroProgressIndicatorSkin extends ProgressIndicatorSkin // extends
 		}
 	};
 
-	private final DoubleProperty maxStepTime = new StyleableDoubleProperty(300.0d)
+	private final DoubleProperty maxStepTime = new StyleableDoubleProperty(150.0d)
 	{
 		@Override
 		protected void invalidated()
 		{
-			if(MetroProgressIndicatorSkin.this.spinner != null)
+			if (MetroProgressIndicatorSkin.this.spinner != null)
 			{
 				MetroProgressIndicatorSkin.this.spinner.rebuild();
 				MetroProgressIndicatorSkin.this.spinner.rebuildTimeline();
-				if(MetroProgressIndicatorSkin.this.indeterminateTransition != null)
+				if (MetroProgressIndicatorSkin.this.indeterminateTransition != null)
 				{
 					MetroProgressIndicatorSkin.this.indeterminateTransition.playFromStart();
 				}
@@ -536,16 +543,16 @@ public class MetroProgressIndicatorSkin extends ProgressIndicatorSkin // extends
 		}
 	};
 
-	private final DoubleProperty nextSegmentTime = new StyleableDoubleProperty(200.0d)
+	private final DoubleProperty nextSegmentTime = new StyleableDoubleProperty(175.0d)
 	{
 		@Override
 		protected void invalidated()
 		{
-			if(MetroProgressIndicatorSkin.this.spinner != null)
+			if (MetroProgressIndicatorSkin.this.spinner != null)
 			{
 				MetroProgressIndicatorSkin.this.spinner.rebuild();
 				MetroProgressIndicatorSkin.this.spinner.rebuildTimeline();
-				if(MetroProgressIndicatorSkin.this.indeterminateTransition != null)
+				if (MetroProgressIndicatorSkin.this.indeterminateTransition != null)
 				{
 					MetroProgressIndicatorSkin.this.indeterminateTransition.playFromStart();
 				}
@@ -571,16 +578,16 @@ public class MetroProgressIndicatorSkin extends ProgressIndicatorSkin // extends
 		}
 	};
 
-	private final DoubleProperty nextSpinTime = new StyleableDoubleProperty(500.0d)
+	private final DoubleProperty nextSpinTime = new StyleableDoubleProperty(400.0d)
 	{
 		@Override
 		protected void invalidated()
 		{
-			if(MetroProgressIndicatorSkin.this.spinner != null)
+			if (MetroProgressIndicatorSkin.this.spinner != null)
 			{
 				MetroProgressIndicatorSkin.this.spinner.rebuild();
 				MetroProgressIndicatorSkin.this.spinner.rebuildTimeline();
-				if(MetroProgressIndicatorSkin.this.indeterminateTransition != null)
+				if (MetroProgressIndicatorSkin.this.indeterminateTransition != null)
 				{
 					MetroProgressIndicatorSkin.this.indeterminateTransition.playFromStart();
 				}
@@ -611,25 +618,26 @@ public class MetroProgressIndicatorSkin extends ProgressIndicatorSkin // extends
 	@Override
 	protected void initialize()
 	{
-		if(this.control != null)
+		if (this.control != null)
 		{
-			if(this.control.isIndeterminate())
+			if (this.control.isIndeterminate())
 			{
 				this.spinner = new MetroIndetermineSpinner(this.spinEnabled.get(),
-						this.progressColor.get());
+														   this.progressColor.get());
 				this.getChildren().setAll(this.spinner);
-				if(this.control.impl_isTreeVisible())
+				if (this.control.impl_isTreeVisible())
 				{
-					if(this.indeterminateTransition != null)
+					if (this.indeterminateTransition != null)
 					{
 						this.indeterminateTransition.play();
 					}
 				}
-			} else
+			}
+			else
 			{
-				if(this.spinner != null)
+				if (this.spinner != null)
 				{
-					if(this.indeterminateTransition != null)
+					if (this.indeterminateTransition != null)
 					{
 						this.indeterminateTransition.stop();
 					}
@@ -641,9 +649,11 @@ public class MetroProgressIndicatorSkin extends ProgressIndicatorSkin // extends
 		}
 	}
 
-	/***************************************************************************
+	/**
+	 * ************************************************************************
 	 * Stylesheet Handling
-	 **************************************************************************/
+	 * ************************************************************************
+	 */
 
 	private static final CssMetaData<ProgressIndicator, Paint> PROGRESS_COLOR = new CssMetaData<ProgressIndicator, Paint>(
 			"-fx-progress-color", PaintConverter.getInstance(), null)
@@ -704,7 +714,7 @@ public class MetroProgressIndicatorSkin extends ProgressIndicatorSkin // extends
 	};
 
 	private static final CssMetaData<ProgressIndicator, Number> ANGLE_PER_STEP = new CssMetaData<ProgressIndicator, Number>(
-			"-fx-indeterminate-angle-per-step", SizeConverter.getInstance(), 40)
+			"-fx-indeterminate-angle-per-step", SizeConverter.getInstance(), 20)
 	{
 
 		@Override
@@ -723,7 +733,7 @@ public class MetroProgressIndicatorSkin extends ProgressIndicatorSkin // extends
 	};
 
 	private static final CssMetaData<ProgressIndicator, Number> MAX_STEP_TIME = new CssMetaData<ProgressIndicator, Number>(
-			"-fx-indeterminate-max-step-time", SizeConverter.getInstance(), 300.0d)
+			"-fx-indeterminate-max-step-time", SizeConverter.getInstance(), 150.0d)
 	{
 
 		@Override
@@ -742,7 +752,7 @@ public class MetroProgressIndicatorSkin extends ProgressIndicatorSkin // extends
 	};
 
 	private static final CssMetaData<ProgressIndicator, Number> NEXT_SEGMENT_TIME = new CssMetaData<ProgressIndicator, Number>(
-			"-fx-indeterminate-next-segment-time", SizeConverter.getInstance(), 200.0d)
+			"-fx-indeterminate-next-segment-time", SizeConverter.getInstance(), 175.0d)
 	{
 
 		@Override
@@ -761,7 +771,7 @@ public class MetroProgressIndicatorSkin extends ProgressIndicatorSkin // extends
 	};
 
 	private static final CssMetaData<ProgressIndicator, Number> NEXT_SPIN_TIME = new CssMetaData<ProgressIndicator, Number>(
-			"-fx-indeterminate-next-spin-time", SizeConverter.getInstance(), 500.0d)
+			"-fx-indeterminate-next-spin-time", SizeConverter.getInstance(), 400.0d)
 	{
 
 		@Override
@@ -780,6 +790,7 @@ public class MetroProgressIndicatorSkin extends ProgressIndicatorSkin // extends
 	};
 
 	public static final List<CssMetaData<? extends Styleable, ?>> STYLEABLES;
+
 	static
 	{
 		final List<CssMetaData<? extends Styleable, ?>> styleables = new ArrayList<CssMetaData<? extends Styleable, ?>>(
@@ -796,7 +807,7 @@ public class MetroProgressIndicatorSkin extends ProgressIndicatorSkin // extends
 
 	/**
 	 * @return The CssMetaData associated with this class, which may include the
-	 *         CssMetaData of its super classes.
+	 * CssMetaData of its super classes.
 	 */
 	public static List<CssMetaData<? extends Styleable, ?>> getClassCssMetaData()
 	{
