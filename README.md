@@ -11,7 +11,7 @@ Copy the LICENSE file to your root folder.
 Add following lines as CSS property to your application:
 
 	.progress-indicator {
-		-fx-skin: "cuina.metro.skin.MetroProgressIndicatorSkin";
+		-fx-skin: "niobe.metro.skin.MetroProgressIndicatorSkin";
 		-fx-indeterminate-segment-count: 5;
 	}
 
